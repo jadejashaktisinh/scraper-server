@@ -1,4 +1,4 @@
-# Use the official Puppeteer image which includes Chrome and all dependencies
+# Use the official Puppeteer image
 FROM ghcr.io/puppeteer/puppeteer:latest
 
 # Switch to root to install your app dependencies
@@ -6,9 +6,11 @@ USER root
 WORKDIR /usr/src/app
 
 # Copy package files and install dependencies
-# We skip the Chromium download because the image already has it
+# We skip the manual download because the image already contains Chrome
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
-ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
+# --- REMOVE THE EXECUTABLE_PATH LINE THAT WAS HERE ---
+# The base image already sets this to the correct location automatically.
 
 COPY package*.json ./
 RUN npm install
